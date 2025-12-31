@@ -7,40 +7,37 @@ router.get('/',(req,res)=>{
    res.render('index')
 })
 
-router.post('/paste/create',async (req,res)=>{
-try{
-   let {content}=req.body;
-   let {destroyMode}=req.body;
-   const nanoId=nanoid(12);
-   let {customExpiry}=req.body;
-   let expiresAt=new Date(Date.now() + 5*24*60*60*1000);
+router.post('/paste/create', async (req, res) => {
+  try {
+    const { content, destroyMode, customExpiry } = req.body;
 
-   if(destroyMode==='CUSTOM' && customExpiry){
-     expiresAt=new Date(customExpiry);
-   }
-   
-   let paste=new Paste({
-     pasteId:nanoId,
-     content:content,
-     destroyMode:destroyMode==='READ' ? 'READ' :'TIME',
-     expiresAt:expiresAt,
-    
-   });
+    const nanoId = nanoid(12);
 
-   // console.log(Paste);
-   await paste.save();
-    
-   res.render('success',{
-      link:`${req.protocol}://${req.get('host')}/paste/${nanoId}`
-   })
-   
-}catch(err){
-console.error(err);
-res.status(500).send('something went wrong');
-}
+    let expiresAt = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000); // default 5 days
 
+    if (destroyMode === 'CUSTOM' && customExpiry) {
+      expiresAt = new Date(customExpiry);
+    }
+
+    const paste = new Paste({
+      pasteId: nanoId,
+      content,
+      destroyMode: destroyMode === 'READ' ? 'READ' : 'TIME',
+      expiresAt,
+      hasBeenRead: false
+    });
+
+    await paste.save();
+
+    res.render('success', {
+      link: `${req.protocol}://${req.get('host')}/paste/${nanoId}`
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('something went wrong');
+  }
 });
-
 router.get('/paste/:id', async (req, res) => {
   try {
     const pasteId = req.params.id;
