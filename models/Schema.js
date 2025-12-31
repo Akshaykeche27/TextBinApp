@@ -33,7 +33,7 @@ const pasteSchema = new mongoose.Schema(
     // Expiry time (default = now + 5 days)
     expiresAt: {
       type: Date,
-      default: () => Date.now() + 5 * 24 * 60 * 60 * 1000
+      default: () => Date.now() + 60*60*1000
     }
   },
   {
