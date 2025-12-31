@@ -1,0 +1,53 @@
+<% layout('./layouts/boiler.ejs') %>
+
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <b> Secure Paste ...</b>
+        </div>
+
+        <div class="card-body">
+          <label class="form-label fw-bold">Your Paste</label>
+
+          <textarea id="pasteText" class="form-control" rows="10" readonly>
+<%= content %></textarea
+          >
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-success btn-sm" onclick="copyText()">
+              Copy Text
+            </button>
+
+            <span class="text-muted small">
+              This paste may expire automatically
+            </span>
+          </div>
+        </div>
+
+        <div class="card-footer text-center text-muted">
+          <h5 style="color: rgb(249, 106, 3)">powered by Pastebin Clone</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyText() {
+    const textarea = document.getElementById("pasteText");
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // mobile
+
+    navigator.clipboard
+      .writeText(textarea.value)
+      .then(() => {
+        alert("Text copied successfully!");
+      })
+      .catch(() => {
+        alert("Copy failed");
+      });
+  }
+</script>

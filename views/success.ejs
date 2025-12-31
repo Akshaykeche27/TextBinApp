@@ -1,0 +1,42 @@
+<% layout('./layouts/boiler.ejs') %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <textarea id="pasteContent" class="form-control mb-3" rows="6" placeholder="Enter your text here..."><%= link %></textarea>
+          
+          <div class="d-flex gap-2">
+            <!-- Copy Link Button -->
+            <button class="btn btn-primary btn-sm" id="copyBtn">Copy Link</button>
+
+            <!-- Send/Show Paste Button -->
+             <form action="<%= link %>">
+           <button class="btn btn-primary">View Paste</a></button> 
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Copy link functionality
+  const copyBtn = document.getElementById('copyBtn');
+  const pasteContent = document.getElementById('pasteContent');
+
+  copyBtn.addEventListener('click', () => {
+    pasteContent.select();
+    pasteContent.setSelectionRange(0, 99999); // For mobile
+    document.execCommand('copy');
+    alert('Text copied to clipboard!');
+  });
+
+  // Send content to hidden input before submitting form
+  const form = document.querySelector('form');
+  form.addEventListener('submit', () => {
+    document.getElementById('hiddenContent').value = pasteContent.value;
+  });
+</script>
