@@ -1,5 +1,10 @@
 <% layout('./layouts/boiler.ejs') %>
-
+<style>
+  a{
+    text-decoration: none;
+    color: blue;
+  }
+</style>
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -12,9 +17,7 @@
             <button class="btn btn-primary btn-sm" id="copyBtn">Copy Link</button>
 
             <!-- Send/Show Paste Button -->
-             <form action="<%= link %>">
-           <button class="btn btn-primary">View Paste</a></button> 
-           </form>
+            <a href="<%= link %>" >View Paste</a>
           </div>
         </div>
       </div>
