@@ -13,7 +13,7 @@ try{
    let {destroyMode}=req.body;
    const nanoId=nanoid(12);
    let {customExpiry}=req.body;
-   let {expiresAt}=new Date(Date.now() + 5*24*60*60*1000);
+   let expiresAt=new Date(Date.now() + 5*24*60*60*1000);
 
    if(destroyMode==='CUSTOM' && customExpiry){
      expiresAt=new Date(customExpiry);
